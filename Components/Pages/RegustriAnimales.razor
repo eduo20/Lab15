@@ -1,0 +1,65 @@
+﻿@page "/registriAnimales"
+@using Lab15.Models
+@using Lab15.Services
+    
+
+@inject RegistroAnimalServicescs AnimalService
+@inject NavigationManager Nav
+
+<h3>Registrar Nuevo Animal</h3>
+
+<div class="card p-3 mb-4">
+    <div class="row">
+        <div class="col-md-6">
+            <label>Nombre del Animal:</label>
+            <input type="text" class="form-control" @bind="aves.nombreAnimal" />
+        </div>
+        <div class="col-md-6">
+            <label>Especie del Animal:</label>
+            <input type="text" class="form-control" @bind="aves.especie" />
+        </div>
+        <div class="col-md-6 ">
+            <label>Tipo de Alimentación:</label>
+            <input type="text" class="form-control" @bind="aves.tipoAlimentacion" />
+        </div>
+
+        <div class="col-md-6 mt-2">
+            <label>Tiempo de vida del animal:</label>
+			<input type="text" class="form-control" @bind="aves.tiempoMaximoVida" />
+        </div>
+
+        <div class="col-md-6">
+            <input type="checkbox" class="form-check-input" id="checkVuela" @bind="aves.vuela" />
+            <label class="form-check-label" for="checkVuela">¿Es volador?</label>
+        </div>
+      
+    </div>
+</div>
+
+    @* BOTÓN QUE FALTABA *@
+    <div class="mt-4">
+        <button class="btn btn-success" @onclick="Guardar">
+            <i class="bi bi-disk"></i> Guardar Ave
+        </button>
+        <button class="btn btn-secondary" @onclick='() => Nav.NavigateTo("/")'>Cancelar</button>
+    </div>
+
+
+@code{
+
+    
+    private Aves aves = new Aves();
+
+
+
+        private void Guardar()
+    {
+
+        if (string.IsNullOrWhiteSpace(aves.nombreAnimal)) return;
+
+        AnimalService.GuardarAnimal(aves);
+
+        aves = new Aves();
+	}
+	
+}
